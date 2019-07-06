@@ -62,7 +62,7 @@ router.post('/login', (req, res) => {
 			return res.status(404).json(errors);
 		}
 		bcrypt.compare(password, user[0].hash).then(isMatch => {
-			console.log(user[0]);
+
 			if (isMatch) {
 				db('users').where('email', user[0].email).then(currentUser => {
 					const payload = { id: currentUser[0].id, email: currentUser[0].email, first_name: currentUser[0].first_name };
