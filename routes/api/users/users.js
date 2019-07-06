@@ -28,6 +28,7 @@ router.post('/register', (req, res) => {
 			bcrypt.hash(password, salt, (err, hash) => {
 				if (err) throw err;
 				newUserLogin.hash = hash;
+				console.log(newUserLogin);
 				db
 					.transaction(trx => {
 						trx
@@ -35,8 +36,9 @@ router.post('/register', (req, res) => {
 							.into('login')
 							.returning('email')
 							.then(loginEmail => {
-								return trx('users').insert({ email: loginEmail[0], first_name, last_name }).then(user => {
-									const payload = { id: user[0].id, email: user[0].email, first_name: user[0].first_name };
+								return trx('users').insert({ email: loginEmail[0], first_name, last_name }).returning('*').then(user => {
+									console.log(user[0]);
+									const payload = { id: user[0].id, email: user[0].email, first_name: user[0].first_name, last_name: user[0].last_name };
 									jwt.sign(payload, process.env.SECRETS_OR_KEY, { expiresIn: 3600 }, (err, token) => {
 										return res.json({ success: true, token: `Bearer ${token}` });
 									});
@@ -45,7 +47,7 @@ router.post('/register', (req, res) => {
 							.then(trx.commit)
 							.catch(trx.rollback);
 					})
-					.catch(err => console.log(`I was called with error`));
+					.catch(err => console.log(err));
 			});
 		});
 	});
@@ -65,7 +67,7 @@ router.post('/login', (req, res) => {
 
 			if (isMatch) {
 				db('users').where('email', user[0].email).then(currentUser => {
-					const payload = { id: currentUser[0].id, email: currentUser[0].email, first_name: currentUser[0].first_name };
+					const payload = { id: currentUser[0].id, email: currentUser[0].email, first_name: currentUser[0].first_name, last_name: currentUser[0].last_name };
 					jwt.sign(payload, process.env.SECRETS_OR_KEY, { expiresIn: 3600 }, (err, token) => {
 						return res.json({ success: true, token: `Bearer ${token}` });
 					});
