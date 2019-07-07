@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('knex');
-const knexConfig = require('../../../knexfile');
+const knexConfig = require('../../knexfile');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const db = knex(knexConfig.development);
 const jwt = require('jsonwebtoken');
 
-const validateLoginInputs = require('../../../validators/users_login');
-const validateRegisterInputs = require('../../../validators/users_register');
+const validateLoginInputs = require('../../validators/users_login');
+const validateRegisterInputs = require('../../validators/users_register');
 router.get('/test', (req, res) => res.json({message: 'working'}));
 
 router.post('/register', (req, res) => {

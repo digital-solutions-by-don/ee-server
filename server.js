@@ -7,7 +7,8 @@ const knex = require('knex');
 const knexConfig = require('./knexfile');
 const db = knex(knexConfig.development);
 const app = express();
-const users = require('./routes/api/users/users');
+const users = require('./routes/api/users');
+const messages = require('./routes/api/messages');
 app.use(
 	cors({
 		origin      : true,
@@ -18,10 +19,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // db('login').where('id', 123).select().then(papers => console.log(papers)).catch(err => console.log(err));
 app.use(passport.initialize());
+require('./config/passport')(passport);
 
-require('./config/passport');
 app.use('/api/users', users);
+app.use('/api/messages', messages);
 const port = process.env.PORT || 5000;
-app.get('/', (req, res) => res.json({ message: 'Server working' }));
+
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
