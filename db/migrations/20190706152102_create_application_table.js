@@ -8,6 +8,7 @@ exports.up = function(knex,Promise) {
       table.string('address').notNullable();
       table.string('address2');
       table.string('city').notNullable();
+      table.string('state').notNullable();
       table.string('zip_code').notNullable();
       table.string('phone_number').notNullable();
       table.string('alt_phone_number');

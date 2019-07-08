@@ -94,4 +94,13 @@ router.post('/login', (req, res) => {
         });
     });
 });
+
+router.get('/', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    try {
+        const users = await db('user').select().returning('*');
+        res.json(users);
+    } catch (error) {
+        res.status(400).json({user: 'Unable to retrieve users at this time'});
+    }
+});
 module.exports = router;

@@ -9,6 +9,7 @@ const db = knex(knexConfig.development);
 const app = express();
 const users = require('./routes/api/users');
 const messages = require('./routes/api/messages');
+const application = require('./routes/api/application');
 app.use(
 	cors({
 		origin      : true,
@@ -23,6 +24,7 @@ require('./config/passport')(passport);
 
 app.use('/api/users', users);
 app.use('/api/messages', messages);
+app.use('/api/application', application);
 const port = process.env.PORT || 5000;
 
 
