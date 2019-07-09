@@ -46,7 +46,8 @@ router.post('/register', (req, res) => {
                                         id: user[0].id,
                                         email: user[0].email,
                                         first_name: user[0].first_name,
-                                        last_name: user[0].last_name
+                                        last_name: user[0].last_name,
+                                        isAdmin: user[0].isAdmin
                                     };
                                     jwt.sign(payload, process.env.SECRETS_OR_KEY, {expiresIn: 3600}, (err, token) => {
                                         return res.json({success: true, token: `Bearer ${token}`});

@@ -38,16 +38,16 @@ module.exports = function validatePersonalDataInputs(data) {
     if (Validator.isEmpty(data.state)) {
         errors.state = '*Required';
     }
-
-    if (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(data.zip_code)) {
-        errors.zip_code = 'Please provide a valid zipcode';
+   console.log(data.start_date);
+    if (!/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(data.zip_code)) {
+        errors.zip_code = 'Please provide a valid zip code';
     }
 
     if (Validator.isEmpty(data.zip_code)) {
         errors.zip_code = '*Required';
     }
 
-    if (/(^\d{10}$)|(^\d{3}-\d{3}-\d{4}$)|(^\d{1}-\d{3}-\d{3}-\d{4}$)|(^\(\d{3}\)\s\d{3}-\d{4}$)/.test(data.phone_number)) {
+    if (!/(^\d{10}$)|(^\d{3}-\d{3}-\d{4}$)|(^\d{1}-\d{3}-\d{3}-\d{4}$)|(^\(\d{3}\)\s\d{3}-\d{4}$)/.test(data.phone_number)) {
         errors.phone_number = 'Please provide a valid phone number';
     }
 
@@ -55,7 +55,7 @@ module.exports = function validatePersonalDataInputs(data) {
         errors.phone_number = '*Required'
     }
 
-    if (!isEmpty(data.alt_phone_number) && /(^\d{10}$)|(^\d{3}-\d{3}-\d{4}$)|(^\d{1}-\d{3}-\d{3}-\d{4}$)|(^\(\d{3}\)\s\d{3}-\d{4}$)/.test(data.alt_phone_number)) {
+    if (!isEmpty(data.alt_phone_number) && /!(^\d{10}$)|(^\d{3}-\d{3}-\d{4}$)|(^\d{1}-\d{3}-\d{3}-\d{4}$)|(^\(\d{3}\)\s\d{3}-\d{4}$)/.test(data.alt_phone_number)) {
         errors.alt_phone_number = 'Please provide a valid phone number';
     }
 
